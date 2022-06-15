@@ -1,0 +1,26 @@
+version: '3'
+services:
+  app:
+    image: 'desafio-sogo/app:1'
+    build: ./app
+    container_name: app
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/desafio-sogo-db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+  db:
+    container_name: database
+    image: 'desafio-sogo/database:1'
+    build: ./postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - "dbdata:/var/lib/postgresql/data"
+volumes:
+  dbdata:
+    driver: local
