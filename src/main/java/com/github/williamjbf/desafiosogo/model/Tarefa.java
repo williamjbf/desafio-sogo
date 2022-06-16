@@ -17,6 +17,9 @@ public class Tarefa{
 
     private int prioridade;
 
+    @ManyToOne
+    private Status status;
+
     public long getId() {
         return id;
     }
@@ -47,6 +50,14 @@ public class Tarefa{
 
     public void setPrioridade(int prioridade) {
         this.prioridade = prioridade;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
