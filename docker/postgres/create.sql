@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS tarefa
     frequencia integer NOT NULL,
     prioridade integer NOT NULL,
     titulo character varying(255),
+    minutos_necessario integer NOT NULL,
     status_id bigint default 1,
     CONSTRAINT tarefa_pkey PRIMARY KEY (id),
     CONSTRAINT status FOREIGN KEY (status_id)

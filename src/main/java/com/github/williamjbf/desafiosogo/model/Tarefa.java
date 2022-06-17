@@ -17,6 +17,8 @@ public class Tarefa{
 
     private int prioridade;
 
+    private int minutosNecessario;
+
     @ManyToOne
     private Status status;
 
@@ -50,6 +52,14 @@ public class Tarefa{
 
     public void setPrioridade(int prioridade) {
         this.prioridade = prioridade;
+    }
+
+    public int getMinutosNecessario() {
+        return minutosNecessario;
+    }
+
+    public void setMinutosNecessario(int minutosNecessario) {
+        this.minutosNecessario = minutosNecessario;
     }
 
     public Status getStatus() {
