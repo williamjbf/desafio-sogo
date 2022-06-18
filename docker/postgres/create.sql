@@ -5,6 +5,13 @@ CREATE TABLE IF NOT EXISTS status
     CONSTRAINT status_pkey PRIMARY KEY (id)
 );
 
+CREATE TABLE IF NOT EXISTS projeto
+(
+    id bigint NOT NULL,
+    titulo character varying(255),
+    CONSTRAINT projeto_pkey PRIMARY KEY (id)
+);
+
 CREATE TABLE IF NOT EXISTS tarefa
 (
     id bigint NOT NULL,
@@ -14,8 +21,25 @@ CREATE TABLE IF NOT EXISTS tarefa
     minutos_necessario integer NOT NULL,
     dia_agendado date,
     status_id bigint default 1,
+    projeto_id bigint,
     CONSTRAINT tarefa_pkey PRIMARY KEY (id),
     CONSTRAINT status FOREIGN KEY (status_id)
         REFERENCES status (id) MATCH SIMPLE
+        ON DELETE CASCADE,
+    CONSTRAINT projeto_id FOREIGN KEY (projeto_id)
+        REFERENCES projeto (id) MATCH SIMPLE
         ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS projeto_tarefas
+(
+    projeto_id bigint NOT NULL,
+    tarefas_id bigint NOT NULL,
+    CONSTRAINT tarefas_id UNIQUE (tarefas_id),
+    CONSTRAINT projeto_id FOREIGN KEY (projeto_id)
+        REFERENCES projeto (id) MATCH SIMPLE
+        ON DELETE NO ACTION,
+    CONSTRAINT tarefas_id FOREIGN KEY (tarefas_id)
+        REFERENCES tarefa (id) MATCH SIMPLE
+        ON DELETE NO ACTION
 );

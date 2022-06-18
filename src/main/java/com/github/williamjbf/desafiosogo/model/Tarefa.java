@@ -27,6 +27,9 @@ public class Tarefa{
     }
 
     @ManyToOne
+    private Projeto projeto;
+
+    @ManyToOne
     private Status status;
 
     public long getId() {
