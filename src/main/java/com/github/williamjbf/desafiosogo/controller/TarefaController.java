@@ -32,7 +32,16 @@ public class TarefaController {
     }
 
     @GetMapping("agenda")
-    public List<Tarefa> gerarAgenda(@RequestParam(name = "tempoMaximo") Integer tempoMaximo){
+    public List<Tarefa> gerarAgenda(@RequestParam(name = "tempoMaximo") int tempoMaximo){
         return tarefaService.gerarAgenda(tempoMaximo);
+    }
+
+    @GetMapping("pendentes")
+    public List<Tarefa> pendentesPorTempo(
+            @RequestParam(required = true,name = "mes") Integer mes,
+            @RequestParam(required = false, name = "semana")Integer semana,
+            @RequestParam(required = false, name = "dia")Integer dia
+    ){
+        return tarefaService.buscarTarefasPendentePorPeriodo(dia,semana,mes);
     }
 }

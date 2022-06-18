@@ -10,8 +10,9 @@ CREATE TABLE IF NOT EXISTS tarefa
     id bigint NOT NULL,
     frequencia integer NOT NULL,
     prioridade integer NOT NULL,
-    titulo character varying(255),
+    titulo character varying(255) NOT NULL,
     minutos_necessario integer NOT NULL,
+    dia_agendado date,
     status_id bigint default 1,
     CONSTRAINT tarefa_pkey PRIMARY KEY (id),
     CONSTRAINT status FOREIGN KEY (status_id)

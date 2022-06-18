@@ -1,6 +1,7 @@
 package com.github.williamjbf.desafiosogo.model;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -18,6 +19,12 @@ public class Tarefa{
     private int prioridade;
 
     private int minutosNecessario;
+
+    private LocalDate diaAgendado;
+
+    public Tarefa(){
+        this.diaAgendado = LocalDate.now();
+    }
 
     @ManyToOne
     private Status status;
@@ -60,6 +67,14 @@ public class Tarefa{
 
     public void setMinutosNecessario(int minutosNecessario) {
         this.minutosNecessario = minutosNecessario;
+    }
+
+    public LocalDate getDiaAgendado() {
+        return diaAgendado;
+    }
+
+    public void setDiaAgendado(LocalDate diaAgendado) {
+        this.diaAgendado = diaAgendado;
     }
 
     public Status getStatus() {
