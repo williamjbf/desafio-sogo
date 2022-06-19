@@ -2,6 +2,7 @@ package com.github.williamjbf.desafiosogo.controller;
 
 import com.github.williamjbf.desafiosogo.model.Status;
 import com.github.williamjbf.desafiosogo.repository.StatusRepository;
+import com.github.williamjbf.desafiosogo.service.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,14 +15,12 @@ public class UtilController {
     @Autowired
     StatusRepository statusRepository;
 
+    @Autowired
+    UtilService utilService;
+
     @PostMapping
     public void popular(){
-        Status pendente = new Status();
-        pendente.setDescricao("PENDENTE");
-        Status concluido = new Status();
-        pendente.setDescricao("CONCLUIDO");
-        statusRepository.save(pendente);
-        statusRepository.save(concluido);
+        utilService.popular();
     }
 
 }

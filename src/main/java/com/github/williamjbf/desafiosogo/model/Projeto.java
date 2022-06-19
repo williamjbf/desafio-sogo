@@ -15,7 +15,7 @@ public class Projeto implements Serializable {
     private String titulo;
 
     @OneToMany(targetEntity = Tarefa.class,cascade = CascadeType.ALL)
-    @JoinColumn(name ="projeto_pk",referencedColumnName = "id")
+    @JoinColumn(name ="projeto_id",referencedColumnName = "id")
     private List<Tarefa> tarefas = new ArrayList<>();
 
     public void adicionarTarefas(Tarefa tarefa){
