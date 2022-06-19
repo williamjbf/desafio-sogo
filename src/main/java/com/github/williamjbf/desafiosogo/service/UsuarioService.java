@@ -7,12 +7,15 @@ import com.github.williamjbf.desafiosogo.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.xml.ws.soap.Addressing;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
+
+    private final PasswordEncoder encoder;
 
     @Autowired
     UsuarioRepository usuarioRepository;
@@ -20,11 +23,16 @@ public class UsuarioService {
     @Autowired
     ProjetoRepository projetoRepository;
 
+    public UsuarioService(PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
+
     public ResponseEntity<Usuario> cadastrar(Usuario usuario){
-        Usuario usuarioExiste = usuarioRepository.findUsuarioByLogin(usuario.getLogin());
-        if (usuarioExiste != null){
+        Optional<Usuario> usuarioExiste = usuarioRepository.findByLogin(usuario.getLogin());
+        if (usuarioExiste.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
         }
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
         usuario = usuarioRepository.save(usuario);
         adicionarProjetoPadrao(usuario.getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(usuario);

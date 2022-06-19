@@ -11,14 +11,15 @@ import com.github.williamjbf.desafiosogo.repository.UsuarioRepository;
 import com.github.williamjbf.desafiosogo.util.DateUtil;
 import com.github.williamjbf.desafiosogo.util.TextoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
 public class UtilService {
+
+    private final PasswordEncoder encoder;
 
     private String[] nomeUsuarios = {"Paulo","Maria","Fernando","Fernanda","Jorge"};
     private String[] nomeTarefas = {"Tarefa 1","tarefa 2","tarefa 3", "tarefa 4", "tarefa 5",
@@ -35,6 +36,10 @@ public class UtilService {
     @Autowired
     StatusRepository statusRepository;
 
+    public UtilService(PasswordEncoder encoder) {
+        this.encoder = encoder;
+    }
+
     public void popular(){
         Status pendente = new Status();
         pendente.setDescricao("PENDENTE");
@@ -50,14 +55,14 @@ public class UtilService {
         Usuario usuario = new Usuario();
         usuario.setNome("admin");
         usuario.setLogin("admin");
-        usuario.setSenha("admin");
+        usuario.setSenha(encoder.encode("admin"));
         usuarioRepository.save(usuario);
 
         for (int i=0; i< nomeUsuarios.length; i++) {
             usuario = new Usuario();
             usuario.setNome(nomeUsuarios[i]);
             usuario.setLogin(TextoUtil.gerarTextoAleatorio(10));
-            usuario.setSenha(TextoUtil.gerarTextoAleatorio(10));
+            usuario.setSenha(encoder.encode(TextoUtil.gerarTextoAleatorio(10)));
 
             usuario = usuarioRepository.save(usuario);
 
@@ -79,8 +84,8 @@ public class UtilService {
             Tarefa tarefa = new Tarefa();
             tarefa.setTitulo(nomeTarefa);
             tarefa.setMinutosNecessario(gerarNumero(100));
-            tarefa.setFrequencia(gerarNumero(5));
-            tarefa.setPrioridade(gerarNumero(10));
+            tarefa.setFrequencia(gerarNumero(10));
+            tarefa.setPrioridade(gerarNumero(5));
             tarefa.setStatus(gerarStatusTarefa());
             tarefa.setDiaAgendado(
                     DateUtil.dia(gerarNumero(30),6)

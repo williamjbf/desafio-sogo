@@ -1,5 +1,7 @@
 package com.github.williamjbf.desafiosogo.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ public class Usuario {
     @Column(unique = true)
     private String login;
     @NotBlank
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
     @OneToMany(targetEntity = Projeto.class,cascade = CascadeType.ALL)
