@@ -1,6 +1,7 @@
 package com.github.williamjbf.desafiosogo.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class Projeto implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_projeto")
     private long id;
+    @NotBlank
     private String titulo;
 
     @OneToMany(targetEntity = Tarefa.class,cascade = CascadeType.ALL)

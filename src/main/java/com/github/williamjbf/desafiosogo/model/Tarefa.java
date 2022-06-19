@@ -1,9 +1,11 @@
 package com.github.williamjbf.desafiosogo.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 @SequenceGenerator(name = "seq_tarefa",allocationSize = 1)
@@ -13,22 +15,33 @@ public class Tarefa implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_tarefa")
     private long id;
 
+    @NotBlank
     private String titulo;
-
+    @Min(1)
+    @Max(10)
     private int frequencia;
 
+    @Min(1)
+    @Max(5)
     private int prioridade;
-
+    @Min(1)
     private int minutosNecessario;
 
     private LocalDate diaAgendado;
 
-    public Tarefa(){
-        this.diaAgendado = LocalDate.now();
-    }
-
     @ManyToOne
     private Status status;
+
+    public Tarefa(){
+        this.diaAgendado = LocalDate.now();
+        statusPadrao();
+    }
+
+    private void statusPadrao(){
+        Status status = new Status();
+        status.setId(1);
+        this.status = status;
+    }
 
     public long getId() {
         return id;

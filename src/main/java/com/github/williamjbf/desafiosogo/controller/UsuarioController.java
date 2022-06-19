@@ -4,8 +4,10 @@ import com.github.williamjbf.desafiosogo.model.Usuario;
 import com.github.williamjbf.desafiosogo.repository.UsuarioRepository;
 import com.github.williamjbf.desafiosogo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,10 +26,8 @@ public class UsuarioController {
     }
 
     @PostMapping("cadastrar")
-    public Usuario cadastrar(@RequestBody Usuario usuario){
-
+    public HttpEntity<Usuario> cadastrar(@RequestBody @Valid Usuario usuario){
         return usuarioService.cadastrar(usuario);
-
     }
 
 }

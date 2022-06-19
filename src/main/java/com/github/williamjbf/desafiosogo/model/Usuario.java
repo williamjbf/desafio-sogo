@@ -1,6 +1,7 @@
 package com.github.williamjbf.desafiosogo.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +12,12 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_usuario")
     private long id;
+    @NotBlank
     private String nome;
+    @NotBlank
     @Column(unique = true)
     private String login;
+    @NotBlank
     private String senha;
 
     @OneToMany(targetEntity = Projeto.class,cascade = CascadeType.ALL)
