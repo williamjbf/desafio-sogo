@@ -7,12 +7,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("projetos")
 public class ProjetoController {
 
     @Autowired
+    ProjetoRepository projetoRepository;
+    @Autowired
     ProjetoService projetoService;
+
+    @GetMapping
+    public List<Projeto> listar(){
+        return projetoRepository.findAll();
+    }
 
     @PostMapping
     public Projeto criarProjeto(@RequestBody Projeto projeto){

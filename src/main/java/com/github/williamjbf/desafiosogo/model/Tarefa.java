@@ -1,12 +1,13 @@
 package com.github.williamjbf.desafiosogo.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
 @SequenceGenerator(name = "seq_tarefa",allocationSize = 1)
-public class Tarefa{
+public class Tarefa implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "seq_tarefa")
@@ -25,9 +26,6 @@ public class Tarefa{
     public Tarefa(){
         this.diaAgendado = LocalDate.now();
     }
-
-    @ManyToOne
-    private Projeto projeto;
 
     @ManyToOne
     private Status status;

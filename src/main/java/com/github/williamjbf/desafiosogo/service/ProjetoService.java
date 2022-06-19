@@ -23,11 +23,6 @@ public class ProjetoService {
     public Projeto criarProjeto(Projeto projeto){
         return projetoRepository.save(projeto);
     }
-//    public Projeto criarProjeto(String titulo){
-//        Projeto projeto = new Projeto();
-//        projeto.setTitulo(titulo);
-//        return projetoRepository.save(projeto);
-//    }
 
     public ResponseEntity<Projeto> adicionarTarefa(Long idProjeto, Long idTarefa){
         Optional<Projeto> projeto = projetoRepository.findById(idProjeto);
@@ -38,8 +33,8 @@ public class ProjetoService {
             Projeto projetoAchado = projeto.get();
             Tarefa tarefaAchada = tarefa.get();
 
-            projetoAchado.adicionarTarefa(tarefaAchada);
-            projetoRepository.save(projeto.get());
+            projetoAchado.adicionarTarefas(tarefaAchada);
+            projetoRepository.save(projetoAchado);
 
             return ResponseEntity.ok(projetoAchado);
         }
