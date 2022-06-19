@@ -4,6 +4,8 @@ import com.github.williamjbf.desafiosogo.model.Projeto;
 import com.github.williamjbf.desafiosogo.model.Tarefa;
 import com.github.williamjbf.desafiosogo.repository.ProjetoRepository;
 import com.github.williamjbf.desafiosogo.repository.TarefaRepository;
+import com.github.williamjbf.desafiosogo.repository.UsuarioRepository;
+import com.github.williamjbf.desafiosogo.util.LogadoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,9 +21,17 @@ public class ProjetoService {
     @Autowired
     TarefaRepository tarefaRepository;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
 
     public Projeto criarProjeto(Projeto projeto){
-        return projetoRepository.save(projeto);
+        projeto = projetoRepository.save(projeto);
+
+        long usuarioId = usuarioRepository.findByLogin(LogadoUtil.usuarioLogado()).get().getId();
+
+        projetoRepository.adicionarIdUsuario(projeto.getId(),usuarioId);
+        return projeto;
     }
 
     public ResponseEntity<Projeto> adicionarTarefa(Long idProjeto, Long idTarefa){
