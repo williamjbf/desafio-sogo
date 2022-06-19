@@ -4,12 +4,14 @@ import com.github.williamjbf.desafiosogo.model.Projeto;
 import com.github.williamjbf.desafiosogo.model.Usuario;
 import com.github.williamjbf.desafiosogo.repository.ProjetoRepository;
 import com.github.williamjbf.desafiosogo.repository.UsuarioRepository;
+import com.github.williamjbf.desafiosogo.util.LogadoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +27,18 @@ public class UsuarioService {
 
     public UsuarioService(PasswordEncoder encoder) {
         this.encoder = encoder;
+    }
+
+    public ResponseEntity<List<Usuario>> listar(){
+        if (LogadoUtil.isAdmin()){
+            List<Usuario> usuarios = usuarioRepository.findAll();
+            return ResponseEntity.ok(usuarios);
+        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    }
+
+    public Usuario exibirUsuarioAtual(){
+        return usuarioRepository.findByLogin(LogadoUtil.usuarioLogado()).get();
     }
 
     public ResponseEntity<Usuario> cadastrar(Usuario usuario){

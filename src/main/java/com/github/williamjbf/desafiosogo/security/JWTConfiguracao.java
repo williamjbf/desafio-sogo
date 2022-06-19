@@ -29,7 +29,11 @@ public class JWTConfiguracao extends WebSecurityConfigurerAdapter {
             "/swagger-ui.html",
             "/webjars/**",
             "/v3/api-docs/**",
-            "/swagger-ui/**"
+            "/swagger-ui/**",
+            //
+            "/usuarios/cadastrar",
+            "/popular",
+            "/login"
     };
 
     public JWTConfiguracao(UsuarioDetailServiceImpl service, PasswordEncoder passwordEncoder) {
@@ -46,9 +50,6 @@ public class JWTConfiguracao extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable().authorizeRequests()
-                .antMatchers(HttpMethod.POST,"/login").permitAll()
-                .antMatchers(HttpMethod.POST,"/popular").permitAll()
-                .antMatchers(HttpMethod.POST,"/cadastrar").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and()

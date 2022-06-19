@@ -5,6 +5,7 @@ import com.github.williamjbf.desafiosogo.repository.UsuarioRepository;
 import com.github.williamjbf.desafiosogo.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,9 +21,14 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
+    @GetMapping("listar")
+    public ResponseEntity<List<Usuario>> listarTodosUsuarios(){
+        return usuarioService.listar();
+    }
+
     @GetMapping
-    public List<Usuario> listar(){
-        return usuarioRepository.findAll();
+    public Usuario exibirUsuarioLogado(){
+        return usuarioService.exibirUsuarioAtual();
     }
 
     @PostMapping("cadastrar")

@@ -3,9 +3,11 @@ package com.github.williamjbf.desafiosogo.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @SequenceGenerator(name = "seq_usuario",allocationSize = 1)
@@ -16,6 +18,10 @@ public class Usuario {
     private long id;
     @NotBlank
     private String nome;
+
+    @Min(1)
+    private int tempoDisponivelMinutos;
+
     @NotBlank
     @Column(unique = true)
     private String login;
@@ -55,6 +61,14 @@ public class Usuario {
         this.nome = nome;
     }
 
+    public int getTempoDisponivelMinutos() {
+        return tempoDisponivelMinutos;
+    }
+
+    public void setTempoDisponivelMinutos(int tempoDisponivelMinutos) {
+        this.tempoDisponivelMinutos = tempoDisponivelMinutos;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -69,5 +83,18 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(login, usuario.login);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(login);
     }
 }

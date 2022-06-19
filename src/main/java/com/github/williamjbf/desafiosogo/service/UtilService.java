@@ -54,13 +54,17 @@ public class UtilService {
     private void popularUsuario(){
         Usuario usuario = new Usuario();
         usuario.setNome("admin");
+        usuario.setTempoDisponivelMinutos(500);
         usuario.setLogin("admin");
         usuario.setSenha(encoder.encode("admin"));
         usuarioRepository.save(usuario);
 
+        popularProjeto(usuario.getId());
+
         for (int i=0; i< nomeUsuarios.length; i++) {
             usuario = new Usuario();
             usuario.setNome(nomeUsuarios[i]);
+            usuario.setTempoDisponivelMinutos(gerarNumero(500));
             usuario.setLogin(TextoUtil.gerarTextoAleatorio(10));
             usuario.setSenha(encoder.encode(TextoUtil.gerarTextoAleatorio(10)));
 

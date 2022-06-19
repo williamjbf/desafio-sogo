@@ -19,9 +19,14 @@ public class ProjetoController {
     @Autowired
     ProjetoService projetoService;
 
+    @GetMapping("/listar")
+    public ResponseEntity<List<Projeto>> listarTodasTarefas(){
+        return projetoService.listarTodosProjetos();
+    }
+
     @GetMapping
-    public List<Projeto> listar(){
-        return projetoRepository.findAll();
+    public List<Projeto> exibirProjetoUsuarioAtual(){
+        return projetoService.listarProjetoUsuarioAtual();
     }
 
     @PostMapping
